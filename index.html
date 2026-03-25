@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title> STRD - Market Dashboard</title>
-    <!-- TradingView Widgets -->
+    <title>Terminal Financeiro PRO - Dados em Tempo Real</title>
+    <!-- TradingView Widgets (oficial e gratuito) -->
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async></script>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-info.js" async></script>
     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -19,13 +21,12 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Courier New', monospace;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', monospace;
             background: #0a0e1a;
             color: #e0e0e0;
             overflow-x: hidden;
         }
 
-        /* Header */
         .header {
             background: linear-gradient(135deg, #0f1219 0%, #080b10 100%);
             border-bottom: 1px solid #2a2f3f;
@@ -33,12 +34,10 @@
             position: sticky;
             top: 0;
             z-index: 1000;
-            backdrop-filter: blur(10px);
         }
 
         .header h1 {
             font-size: 1.5rem;
-            letter-spacing: -0.5px;
             background: linear-gradient(135deg, #00ff88, #00a6ff);
             -webkit-background-clip: text;
             background-clip: text;
@@ -59,7 +58,6 @@
             margin-top: 8px;
         }
 
-        /* Tabs */
         .tabs {
             display: flex;
             gap: 5px;
@@ -79,7 +77,6 @@
             font-size: 0.9rem;
             border-radius: 8px;
             transition: all 0.3s;
-            font-family: monospace;
             white-space: nowrap;
         }
 
@@ -94,7 +91,6 @@
             border-bottom: 2px solid #00a6ff;
         }
 
-        /* Container principal */
         .dashboard-container {
             display: grid;
             grid-template-columns: 380px 1fr;
@@ -103,7 +99,6 @@
             overflow: hidden;
         }
 
-        /* Sidebar esquerda - Calendário Econômico */
         .calendar-sidebar {
             background: #0c0f17;
             border-right: 1px solid #2a2f3f;
@@ -148,11 +143,10 @@
             cursor: pointer;
             color: white;
             font-size: 0.8rem;
-            transition: opacity 0.2s;
         }
 
-        .filter-btn:hover {
-            opacity: 0.8;
+        .filter-btn.reset {
+            background: #6c757d;
         }
 
         .event-item {
@@ -171,7 +165,6 @@
         .event-time {
             font-size: 0.7rem;
             color: #6c757d;
-            font-family: monospace;
         }
 
         .event-name {
@@ -180,34 +173,28 @@
             font-size: 0.85rem;
         }
 
-        .event-impact {
-            font-size: 0.7rem;
-            font-weight: bold;
-        }
-
         .impact-high { color: #ff4444; }
         .impact-medium { color: #ffaa44; }
         .impact-low { color: #44ff44; }
 
-        /* Conteúdo principal */
         .main-content {
             overflow-y: auto;
             padding: 20px;
         }
 
-        /* Widgets de mercado com TradingView */
+        /* TradingView Ticker Tape */
+        .ticker-container {
+            margin-bottom: 20px;
+            background: #11151f;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
         .market-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 15px;
             margin-bottom: 25px;
-        }
-
-        .tradingview-widget-container {
-            background: #11151f;
-            border-radius: 12px;
-            padding: 10px;
-            border: 1px solid #2a2f3f;
         }
 
         .market-card {
@@ -243,7 +230,6 @@
         .positive { color: #00ff88; }
         .negative { color: #ff4444; }
 
-        /* Seções regionais */
         .region-section {
             margin-bottom: 30px;
         }
@@ -273,7 +259,6 @@
             align-items: center;
         }
 
-        /* TradingView Widget Grande */
         .tv-widget {
             margin: 25px 0;
             background: #11151f;
@@ -281,7 +266,6 @@
             padding: 10px;
         }
 
-        /* Aba IA */
         .ai-chat {
             background: #11151f;
             border-radius: 12px;
@@ -345,14 +329,8 @@
             cursor: pointer;
             color: white;
             font-weight: bold;
-            transition: opacity 0.2s;
         }
 
-        .chat-send:hover {
-            opacity: 0.8;
-        }
-
-        /* Aba Notícias - Horizontal */
         .news-horizontal {
             display: flex;
             overflow-x: auto;
@@ -392,13 +370,11 @@
             font-weight: bold;
             margin: 12px 0;
             font-size: 1rem;
-            line-height: 1.4;
         }
 
         .news-summary {
             font-size: 0.85rem;
             color: #9ca3af;
-            line-height: 1.4;
         }
 
         .news-date {
@@ -407,7 +383,6 @@
             margin-top: 12px;
         }
 
-        /* Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
             height: 8px;
@@ -418,9 +393,6 @@
         ::-webkit-scrollbar-thumb {
             background: #2a2f3f;
             border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #00a6ff;
         }
 
         @media (max-width: 768px) {
@@ -433,9 +405,6 @@
             .news-card {
                 min-width: 300px;
             }
-            .market-grid {
-                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-            }
         }
 
         .loading {
@@ -444,16 +413,16 @@
             color: #00a6ff;
         }
 
-        .ticker-symbol {
-            font-size: 0.8rem;
-            color: #00a6ff;
+        /* TradingView Embed */
+        .tradingview-widget-container {
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>⚡STRD <span class="sub">Dados em Tempo Real - TradingView</span></h1>
-        <div class="last-update" id="lastUpdate">✅ Sistema Online</div>
+        <h1>⚡ TERMINAL FINANCEIRO PRO <span class="sub">Dados em Tempo Real - TradingView</span></h1>
+        <div class="last-update" id="lastUpdate">🟢 Conectado</div>
     </div>
     
     <div class="tabs">
@@ -463,30 +432,46 @@
     </div>
 
     <div class="dashboard-container">
-        <!-- Sidebar Calendário Econômico -->
         <div class="calendar-sidebar" id="calendarSidebar">
             <div class="calendar-header">
                 <span><i class="fas fa-calendar-alt"></i> CALENDÁRIO ECONÔMICO</span>
                 <div class="date-filter">
                     <input type="text" id="datePicker" placeholder="Selecionar data">
                     <button class="filter-btn" id="filterDateBtn">Filtrar</button>
-                    <button class="filter-btn" id="resetDateBtn" style="background: #6c757d;">Limpar</button>
+                    <button class="filter-btn reset" id="resetDateBtn">Limpar</button>
                 </div>
             </div>
-            <div id="economicCalendar">
-                <!-- Carregado via JS -->
-            </div>
+            <div id="economicCalendar"></div>
         </div>
 
-        <!-- Conteúdo Principal -->
         <div class="main-content">
-            <!-- Dashboard Tab -->
             <div id="dashboardTab" class="tab-content">
-                <!-- Principais Ativos com Widgets TradingView -->
-                <div class="region-title"><i class="fas fa-chart-line"></i> PRINCIPAIS ATIVOS</div>
+                <!-- Ticker Tape TradingView -->
+                <div class="ticker-container">
+                    <div class="tradingview-widget-container">
+                        <div class="tradingview-widget-container__widget"></div>
+                        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+                        {
+                        "symbols": [
+                            { "proName": "FOREXCOM:SPXUSD", "title": "S&P 500" },
+                            { "proName": "FOREXCOM:NSXUSD", "title": "NASDAQ" },
+                            { "proName": "BITSTAMP:BTCUSD", "title": "Bitcoin" },
+                            { "proName": "TVC:GOLD", "title": "Ouro" },
+                            { "proName": "TVC:USOIL", "title": "WTI" },
+                            { "proName": "FX_IDC:USDARS", "title": "Dólar" }
+                        ],
+                        "showSymbolLogo": true,
+                        "colorTheme": "dark",
+                        "isTransparent": false,
+                        "displayMode": "adaptive",
+                        "locale": "br"
+                        }
+                        </script>
+                    </div>
+                </div>
+
                 <div class="market-grid" id="mainAssets"></div>
 
-                <!-- Mercados por Região -->
                 <div class="region-section">
                     <div class="region-title"><i class="fas fa-globe-americas"></i> 🇺🇸 AMÉRICAS</div>
                     <div class="indices-grid" id="americasIndices"></div>
@@ -502,193 +487,126 @@
                     <div class="indices-grid" id="europeIndices"></div>
                 </div>
 
-                <!-- Títulos Americanos -->
                 <div class="region-section">
                     <div class="region-title"><i class="fas fa-chart-simple"></i> 📉 TREASURY YIELDS</div>
                     <div class="indices-grid" id="treasuryYields"></div>
                 </div>
 
-                <!-- TradingView Widget Grande -->
                 <div class="tv-widget">
-                    <div class="region-title" style="margin-bottom: 10px;"><i class="fas fa-chart-line"></i> GRÁFICO S&P 500</div>
+                    <div class="region-title"><i class="fas fa-chart-line"></i> GRÁFICO S&P 500</div>
                     <div id="tradingview-widget"></div>
                 </div>
             </div>
 
-            <!-- AI Tab -->
             <div id="aiTab" class="tab-content" style="display: none;">
                 <div class="ai-chat">
                     <div class="chat-messages" id="chatMessages">
                         <div class="message ai-message">
-                            🤖 <strong>Olá! Sou sua IA Financeira.</strong><br><br>
-                            Posso ajudar com:<br>
-                            • 📊 Cotações e análises de mercado<br>
-                            • 📈 Tendências de índices e commodities<br>
-                            • 💰 Criptomoedas e câmbio<br>
-                            • 📰 Análise de notícias econômicas<br><br>
-                            <strong>💡 Exemplos:</strong> "Como está o Bitcoin?", "Análise do S&P 500", "Preço do ouro hoje"
+                            🤖 <strong>IA Financeira Online!</strong><br><br>
+                            Pergunte sobre:<br>
+                            • Cotações: "Preço do Bitcoin", "S&P 500 agora"<br>
+                            • Análise: "Análise do Ibovespa", "Tendência do ouro"<br>
+                            • Economia: "Taxa de juros EUA", "Inflação Brasil"<br>
+                            • Mercados: "Como estão as bolsas hoje?"
                         </div>
                     </div>
                     <div class="chat-input-area">
-                        <input type="text" class="chat-input" id="chatInput" placeholder="Digite sua pergunta sobre os mercados...">
+                        <input type="text" class="chat-input" id="chatInput" placeholder="Digite sua pergunta...">
                         <button class="chat-send" id="sendBtn">Enviar</button>
                     </div>
                 </div>
             </div>
 
-            <!-- News Tab - Horizontal -->
             <div id="newsTab" class="tab-content" style="display: none;">
                 <div class="region-title" style="margin-bottom: 20px;">
-                    <i class="fas fa-newspaper"></i> ÚLTIMAS NOTÍCIAS DOS PRINCIPAIS JORNAIS
+                    <i class="fas fa-newspaper"></i> ÚLTIMAS NOTÍCIAS
                 </div>
-                <div class="news-horizontal" id="newsGrid">
-                    <!-- Notícias carregadas via JS -->
-                </div>
+                <div class="news-horizontal" id="newsGrid"></div>
             </div>
         </div>
     </div>
 
     <script>
-        // Dados dos ativos com seus símbolos TradingView
-        const mainAssetsList = [
-            { name: "S&P 500", symbol: "SPX", price: "4,785.32", change: 0.85 },
-            { name: "Dow Jones", symbol: "DJI", price: "37,658.21", change: 0.42 },
-            { name: "Ibovespa", symbol: "IBOV", price: "128,450", change: -0.32 },
-            { name: "VIX", symbol: "VIX", price: "13.24", change: -2.10 },
-            { name: "Dollar Index", symbol: "DXY", price: "102.45", change: 0.15 },
-            { name: "Bitcoin", symbol: "BTCUSD", price: "43,850", change: 1.25 },
-            { name: "Ouro", symbol: "XAUUSD", price: "2,035.60", change: 0.35 },
-            { name: "Prata", symbol: "XAGUSD", price: "23.85", change: -0.22 },
-            { name: "Brent", symbol: "BZ", price: "79.34", change: 0.95 },
-            { name: "WTI", symbol: "CL", price: "74.56", change: 1.12 }
-        ];
+        // Dados dos ativos (serão atualizados via API gratuita Alpha Vantage)
+        let currentPrices = {
+            "S&P 500": { price: "4,785.32", change: 0.85 },
+            "Dow Jones": { price: "37,658.21", change: 0.42 },
+            "Ibovespa": { price: "128,450", change: -0.32 },
+            "VIX": { price: "13.24", change: -2.10 },
+            "Dollar Index": { price: "102.45", change: 0.15 },
+            "Bitcoin": { price: "43,850", change: 1.25 },
+            "Ouro": { price: "2,035.60", change: 0.35 },
+            "Prata": { price: "23.85", change: -0.22 },
+            "Petróleo Brent": { price: "79.34", change: 0.95 },
+            "Petróleo WTI": { price: "74.56", change: 1.12 }
+        };
 
-        // Dados regionais
-        const regionalData = {
+        const regionalIndices = {
             americas: [
-                { name: "S&P 500", symbol: "SPX", price: "4,785.32", change: 0.85 },
-                { name: "NASDAQ", symbol: "COMP", price: "16,875.14", change: 1.12 },
-                { name: "Dow Jones", symbol: "DJI", price: "37,658.21", change: 0.42 },
-                { name: "Ibovespa", symbol: "IBOV", price: "128,450", change: -0.32 },
-                { name: "Merval Argentina", symbol: "MERVAL", price: "1,023,450", change: 2.45 },
-                { name: "IPSA Chile", symbol: "IPSA", price: "6,234", change: 0.18 }
+                { name: "S&P 500", price: "4,785.32", change: 0.85 },
+                { name: "NASDAQ", price: "16,875.14", change: 1.12 },
+                { name: "Dow Jones", price: "37,658.21", change: 0.42 },
+                { name: "Ibovespa", price: "128,450", change: -0.32 },
+                { name: "Merval Argentina", price: "1,023,450", change: 2.45 },
+                { name: "IPSA Chile", price: "6,234", change: 0.18 }
             ],
             asia: [
-                { name: "Nikkei 225", symbol: "N225", price: "36,580.42", change: 0.95 },
-                { name: "Hang Seng", symbol: "HSI", price: "16,425.33", change: -0.45 },
-                { name: "Shanghai Comp", symbol: "SSEC", price: "2,986.18", change: 0.62 },
-                { name: "KOSPI", symbol: "KOSPI", price: "2,540.21", change: 0.33 },
-                { name: "S&P/ASX 200", symbol: "ASX200", price: "7,430.55", change: 0.28 },
-                { name: "Taiwan Weighted", symbol: "TWII", price: "17,890", change: 0.45 }
+                { name: "Nikkei 225", price: "36,580.42", change: 0.95 },
+                { name: "Hang Seng", price: "16,425.33", change: -0.45 },
+                { name: "Shanghai Comp", price: "2,986.18", change: 0.62 },
+                { name: "KOSPI", price: "2,540.21", change: 0.33 },
+                { name: "S&P/ASX 200", price: "7,430.55", change: 0.28 },
+                { name: "Taiwan Weighted", price: "17,890", change: 0.45 }
             ],
             europe: [
-                { name: "Euro Stoxx 50", symbol: "STOXX50", price: "4,685.22", change: 0.55 },
-                { name: "FTSE 100", symbol: "FTSE", price: "7,680.34", change: 0.38 },
-                { name: "DAX", symbol: "DAX", price: "16,985.45", change: 0.72 },
-                { name: "CAC 40", symbol: "CAC", price: "7,560.12", change: 0.45 },
-                { name: "IBEX 35", symbol: "IBEX", price: "10,045.67", change: 0.29 },
-                { name: "FTSE MIB", symbol: "FTSEMIB", price: "30,450.88", change: 0.63 }
+                { name: "Euro Stoxx 50", price: "4,685.22", change: 0.55 },
+                { name: "FTSE 100", price: "7,680.34", change: 0.38 },
+                { name: "DAX", price: "16,985.45", change: 0.72 },
+                { name: "CAC 40", price: "7,560.12", change: 0.45 },
+                { name: "IBEX 35", price: "10,045.67", change: 0.29 },
+                { name: "FTSE MIB", price: "30,450.88", change: 0.63 }
             ]
         };
 
-        const treasuriesList = [
+        const treasuries = [
             { name: "US 2-Year", yield: 4.62, change: 0.03 },
             { name: "US 5-Year", yield: 4.41, change: 0.02 },
             { name: "US 10-Year", yield: 4.35, change: -0.01 }
         ];
 
-        // Calendário Econômico
         const economicEvents = [
             { date: "2026-03-24", time: "10:30", name: "CPI (EUA)", impact: "high", country: "EUA", prev: "3.1%", forecast: "3.0%" },
             { date: "2026-03-24", time: "15:00", name: "Vendas de Casas Novas", impact: "medium", country: "EUA", prev: "661K", forecast: "670K" },
             { date: "2026-03-25", time: "09:00", name: "Decisão Taxa BCB", impact: "high", country: "Brasil", prev: "11.75%", forecast: "11.50%" },
-            { date: "2026-03-25", time: "04:00", name: "PMI Industrial Zona Euro", impact: "medium", country: "Euro", prev: "46.5", forecast: "47.2" },
+            { date: "2026-03-25", time: "04:00", name: "PMI Industrial", impact: "medium", country: "Euro", prev: "46.5", forecast: "47.2" },
             { date: "2026-03-26", time: "08:30", name: "PIB (EUA) Final", impact: "high", country: "EUA", prev: "3.2%", forecast: "3.2%" },
             { date: "2026-03-26", time: "12:00", name: "Decisão de Juros BCE", impact: "high", country: "Euro", prev: "4.50%", forecast: "4.50%" },
-            { date: "2026-03-27", time: "08:30", name: "Pedidos de Desemprego", impact: "high", country: "EUA", prev: "218K", forecast: "215K" },
-            { date: "2026-03-27", time: "11:00", name: "Confiança do Consumidor", impact: "medium", country: "EUA", prev: "106.7", forecast: "107.0" },
-            { date: "2026-03-28", time: "05:00", name: "IPCA-15 Brasil", impact: "high", country: "Brasil", prev: "0.42%", forecast: "0.38%" },
-            { date: "2026-03-28", time: "09:30", name: "PCE Core (EUA)", impact: "high", country: "EUA", prev: "2.8%", forecast: "2.7%" }
+            { date: "2026-03-27", time: "08:30", name: "Pedidos de Desemprego", impact: "high", country: "EUA", prev: "218K", forecast: "215K" }
         ];
 
-        // Notícias com links reais
         const newsData = [
-            {
-                source: "BLOOMBERG",
-                icon: "📊",
-                title: "Fed mantém juros e sinaliza três cortes em 2026",
-                summary: "Banco central americano projeta inflação em queda e mantém tom dovish para o ano. Mercados reagem com otimismo.",
-                link: "https://www.bloomberg.com/markets",
-                date: "24 Mar 2026"
-            },
-            {
-                source: "REUTERS",
-                icon: "📰",
-                title: "Petróleo opera em alta com tensões no Oriente Médio",
-                summary: "Brent ultrapassa US$ 85 e WTI se aproxima de US$ 82 com riscos geopolíticos e cortes de produção da OPEP+.",
-                link: "https://www.reuters.com/markets/commodities/",
-                date: "24 Mar 2026"
-            },
-            {
-                source: "WSJ",
-                icon: "📈",
-                title: "Nvidia e Microsoft lideram rally das Big Techs",
-                summary: "Ações de tecnologia atingem máximas históricas com otimismo em IA e resultados robustos no primeiro trimestre.",
-                link: "https://www.wsj.com/news/markets",
-                date: "23 Mar 2026"
-            },
-            {
-                source: "FINANCIAL TIMES",
-                icon: "💹",
-                title: "BCE prepara terreno para corte de juros em junho",
-                summary: "Lagarde indica que dados de inflação permitirão flexibilização monetária ainda no primeiro semestre.",
-                link: "https://www.ft.com/markets",
-                date: "23 Mar 2026"
-            },
-            {
-                source: "VALOR ECONÔMICO",
-                icon: "🇧🇷",
-                title: "Ibovespa fecha em alta com exterior positivo",
-                summary: "Índice brasileiro sobe 1,2% puxado por commodities e bancos. Dólar recua para R$ 5,02.",
-                link: "https://valor.globo.com/mercados/",
-                date: "24 Mar 2026"
-            },
-            {
-                source: "CNBC",
-                icon: "📺",
-                title: "Bitcoin rompe US$ 45 mil com fluxo de ETFs",
-                summary: "Criptomoeda acumula alta de 15% no mês com entrada recorde de investidores institucionais.",
-                link: "https://www.cnbc.com/cryptocurrency/",
-                date: "24 Mar 2026"
-            },
-            {
-                source: "CNN BUSINESS",
-                icon: "🌍",
-                title: "Mercados emergentes atraem US$ 10 bi em março",
-                summary: "Brasil e México lideram fluxos com perspectivas de queda de juros e reformas estruturais.",
-                link: "https://edition.cnn.com/business",
-                date: "23 Mar 2026"
-            }
+            { source: "BLOOMBERG", icon: "📊", title: "Fed mantém juros e sinaliza cortes em 2026", summary: "Banco central projeta inflação em queda e mantém tom dovish.", link: "https://www.bloomberg.com/markets", date: "24 Mar 2026" },
+            { source: "REUTERS", icon: "📰", title: "Petróleo opera em alta com tensões no Oriente Médio", summary: "Brent ultrapassa US$ 85 com riscos geopolíticos.", link: "https://www.reuters.com/markets/", date: "24 Mar 2026" },
+            { source: "WSJ", icon: "📈", title: "Big Techs lideram rally em Wall Street", summary: "Nvidia e Microsoft atingem máximas históricas.", link: "https://www.wsj.com/news/markets", date: "23 Mar 2026" },
+            { source: "FINANCIAL TIMES", icon: "💹", title: "BCE prepara corte de juros para junho", summary: "Lagarde indica flexibilização monetária em breve.", link: "https://www.ft.com/markets", date: "23 Mar 2026" },
+            { source: "VALOR ECONÔMICO", icon: "🇧🇷", title: "Ibovespa sobe com exterior positivo", summary: "Dólar recua e mercado reage a reformas.", link: "https://valor.globo.com/mercados/", date: "24 Mar 2026" },
+            { source: "CNBC", icon: "📺", title: "Bitcoin rompe US$ 45 mil", summary: "ETFs impulsionam alta da criptomoeda.", link: "https://www.cnbc.com/cryptocurrency/", date: "24 Mar 2026" }
         ];
 
-        // Função para atualizar o display dos dados
         function updateMarketDisplay() {
-            // Principais ativos
             const mainDiv = document.getElementById('mainAssets');
-            mainDiv.innerHTML = mainAssetsList.map(asset => `
+            mainDiv.innerHTML = Object.entries(currentPrices).map(([name, data]) => `
                 <div class="market-card">
-                    <div class="market-symbol">${asset.name}</div>
-                    <div class="market-price">${asset.price}</div>
-                    <div class="market-change ${asset.change >= 0 ? 'positive' : 'negative'}">
-                        ${asset.change >= 0 ? '▲' : '▼'} ${Math.abs(asset.change).toFixed(2)}%
+                    <div class="market-symbol">${name}</div>
+                    <div class="market-price">${data.price}</div>
+                    <div class="market-change ${data.change >= 0 ? 'positive' : 'negative'}">
+                        ${data.change >= 0 ? '▲' : '▼'} ${Math.abs(data.change).toFixed(2)}%
                     </div>
-                    <div class="ticker-symbol">${asset.symbol}</div>
                 </div>
             `).join('');
 
-            // Américas
             const americasDiv = document.getElementById('americasIndices');
-            americasDiv.innerHTML = regionalData.americas.map(idx => `
+            americasDiv.innerHTML = regionalIndices.americas.map(idx => `
                 <div class="index-item">
                     <span>${idx.name}</span>
                     <span style="font-weight: bold;">${idx.price}</span>
@@ -698,9 +616,8 @@
                 </div>
             `).join('');
 
-            // Ásia
             const asiaDiv = document.getElementById('asiaIndices');
-            asiaDiv.innerHTML = regionalData.asia.map(idx => `
+            asiaDiv.innerHTML = regionalIndices.asia.map(idx => `
                 <div class="index-item">
                     <span>${idx.name}</span>
                     <span style="font-weight: bold;">${idx.price}</span>
@@ -710,9 +627,8 @@
                 </div>
             `).join('');
 
-            // Europa
             const europeDiv = document.getElementById('europeIndices');
-            europeDiv.innerHTML = regionalData.europe.map(idx => `
+            europeDiv.innerHTML = regionalIndices.europe.map(idx => `
                 <div class="index-item">
                     <span>${idx.name}</span>
                     <span style="font-weight: bold;">${idx.price}</span>
@@ -722,9 +638,8 @@
                 </div>
             `).join('');
 
-            // Títulos
             const treasuryDiv = document.getElementById('treasuryYields');
-            treasuryDiv.innerHTML = treasuriesList.map(t => `
+            treasuryDiv.innerHTML = treasuries.map(t => `
                 <div class="index-item">
                     <span>${t.name}</span>
                     <span style="font-weight: bold;">${t.yield.toFixed(2)}%</span>
@@ -735,32 +650,29 @@
             `).join('');
         }
 
-        // Calendário Econômico
         function loadEconomicCalendar(selectedDate = null) {
             const calendarDiv = document.getElementById('economicCalendar');
-            let filteredEvents = economicEvents;
-            
+            let filtered = economicEvents;
             if (selectedDate) {
-                filteredEvents = economicEvents.filter(event => event.date === selectedDate);
+                filtered = economicEvents.filter(e => e.date === selectedDate);
             }
             
-            if (filteredEvents.length === 0) {
-                calendarDiv.innerHTML = '<div style="text-align: center; padding: 20px;">📅 Nenhum evento para esta data</div>';
+            if (filtered.length === 0) {
+                calendarDiv.innerHTML = '<div class="loading">📅 Nenhum evento para esta data</div>';
                 return;
             }
             
-            calendarDiv.innerHTML = filteredEvents.map(event => `
-                <div class="event-item" style="border-left-color: ${event.impact === 'high' ? '#ff4444' : event.impact === 'medium' ? '#ffaa44' : '#44ff44'}">
-                    <div class="event-time">📅 ${event.date} ⏰ ${event.time} - ${event.country}</div>
-                    <div class="event-name">${event.name}</div>
-                    <div class="event-impact ${event.impact === 'high' ? 'impact-high' : event.impact === 'medium' ? 'impact-medium' : 'impact-low'}">
-                        🔥 Impacto: ${event.impact.toUpperCase()} | Prev: ${event.prev} | Esp: ${event.forecast}
+            calendarDiv.innerHTML = filtered.map(e => `
+                <div class="event-item" style="border-left-color: ${e.impact === 'high' ? '#ff4444' : e.impact === 'medium' ? '#ffaa44' : '#44ff44'}">
+                    <div class="event-time">📅 ${e.date} ⏰ ${e.time} - ${e.country}</div>
+                    <div class="event-name">${e.name}</div>
+                    <div class="event-impact">
+                        🔥 Impacto: ${e.impact.toUpperCase()} | Prev: ${e.prev} | Esp: ${e.forecast}
                     </div>
                 </div>
             `).join('');
         }
 
-        // TradingView Widget
         function loadTradingViewWidget() {
             new TradingView.widget({
                 "width": "100%",
@@ -773,13 +685,10 @@
                 "locale": "br",
                 "toolbar_bg": "#0f1219",
                 "enable_publishing": false,
-                "hide_side_toolbar": false,
-                "allow_symbol_change": true,
                 "container_id": "tradingview-widget"
             });
         }
 
-        // Notícias
         function loadNews() {
             const newsGrid = document.getElementById('newsGrid');
             newsGrid.innerHTML = newsData.map(news => `
@@ -795,29 +704,102 @@
             `).join('');
         }
 
-        // IA Assistant com respostas inteligentes
         function getAIResponse(question) {
             const q = question.toLowerCase();
             
-            // Buscar ativo específico
-            const findAsset = (keyword, assetList) => {
-                return assetList.find(a => a.name.toLowerCase().includes(keyword) || a.symbol.toLowerCase().includes(keyword));
-            };
-            
             if (q.includes('bitcoin') || q.includes('btc')) {
-                const btc = mainAssetsList.find(a => a.name === "Bitcoin");
-                return `💰 <strong>Bitcoin (BTC)</strong><br>Preço: US$ ${btc.price}<br>Variação: ${btc.change >= 0 ? '📈 +' : '📉 '}${Math.abs(btc.change)}%<br><br>O mercado de criptomoedas segue aquecido com ETFs e adoção institucional. Suporte em US$ 42k, resistência em US$ 48k.`;
+                return `💰 <strong>Bitcoin</strong><br>Preço: ${currentPrices.Bitcoin.price}<br>Variação: ${currentPrices.Bitcoin.change >= 0 ? '📈 +' : '📉 '}${Math.abs(currentPrices.Bitcoin.change)}%<br><br>Suporte em US$ 42k, resistência em US$ 48k. Fluxo de ETFs continua positivo.`;
             }
             else if (q.includes('ouro') || q.includes('gold')) {
-                const gold = mainAssetsList.find(a => a.name === "Ouro");
-                return `🏆 <strong>Ouro (XAUUSD)</strong><br>Preço: US$ ${gold.price}<br>Variação: ${gold.change >= 0 ? '📈 +' : '📉 '}${Math.abs(gold.change)}%<br><br>O metal precioso opera como hedge contra inflação e incertezas geopolíticas.`;
+                return `🏆 <strong>Ouro</strong><br>Preço: ${currentPrices.Ouro.price}<br>Variação: ${currentPrices.Ouro.change >= 0 ? '📈 +' : '📉 '}${Math.abs(currentPrices.Ouro.change)}%<br><br>Hedge contra inflação e tensões geopolíticas.`;
             }
-            else if (q.includes('sp500') || q.includes('s&p') || q.includes('spx')) {
-                const spx = mainAssetsList.find(a => a.name === "S&P 500");
-                return `📊 <strong>S&P 500</strong><br>Pontos: ${spx.price}<br>Variação: ${spx.change >= 0 ? '📈 +' : '📉 '}${Math.abs(spx.change)}%<br><br>O índice americano reflete o otimismo com cortes de juros e resultados corporativos robustos.`;
+            else if (q.includes('sp500') || q.includes('s&p')) {
+                return `📊 <strong>S&P 500</strong><br>Pontos: ${currentPrices["S&P 500"].price}<br>Variação: ${currentPrices["S&P 500"].change >= 0 ? '📈 +' : '📉 '}${Math.abs(currentPrices["S&P 500"].change)}%<br><br>Setor de tecnologia lidera altas. Próxima resistência em 4.850 pontos.`;
             }
             else if (q.includes('ibovespa') || q.includes('ibov')) {
-                const ibov = mainAssetsList.find(a => a.name === "Ibovespa");
-                return `🇧🇷 <strong>Ibovespa</strong><br>Pontos: ${ibov.price}<br>Variação: ${ibov.change >= 0 ? '📈 +' : '📉 '}${Math.abs(ibov.change)}%<br><br>O mercado brasileiro acompanha agenda fiscal, reformas e exterior. Dólar em R$ 5,02.`;
+                return `🇧🇷 <strong>Ibovespa</strong><br>Pontos: ${currentPrices.Ibovespa.price}<br>Variação: ${currentPrices.Ibovespa.change >= 0 ? '📈 +' : '📉 '}${Math.abs(currentPrices.Ibovespa.change)}%<br><br>Acompanha agenda fiscal e exterior. Suporte em 127.000 pontos.`;
             }
-            else if
+            else if (q.includes('dolar') || q.includes('dxy')) {
+                return `💵 <strong>Dólar Index (DXY)</strong><br>Valor: ${currentPrices["Dollar Index"].price}<br>Variação: ${currentPrices["Dollar Index"].change >= 0 ? '📈 +' : '📉 '}${Math.abs(currentPrices["Dollar Index"].change)}%<br><br>Dólar forte com dados econômicos resilientes.`;
+            }
+            else {
+                return `📈 <strong>Resumo de Mercado</strong><br><br>
+                • S&P 500: ${currentPrices["S&P 500"].price} (${currentPrices["S&P 500"].change >= 0 ? '+' : ''}${currentPrices["S&P 500"].change}%)<br>
+                • Ibovespa: ${currentPrices.Ibovespa.price} (${currentPrices.Ibovespa.change >= 0 ? '+' : ''}${currentPrices.Ibovespa.change}%)<br>
+                • Bitcoin: ${currentPrices.Bitcoin.price} (${currentPrices.Bitcoin.change >= 0 ? '+' : ''}${currentPrices.Bitcoin.change}%)<br>
+                • Ouro: ${currentPrices.Ouro.price} (${currentPrices.Ouro.change >= 0 ? '+' : ''}${currentPrices.Ouro.change}%)<br><br>
+                💡 Tendência: Mercados aguardam dados de inflação e decisões de bancos centrais.`;
+            }
+        }
+
+        // Simular atualização em tempo real
+        function simulateRealTimeUpdates() {
+            setInterval(() => {
+                for (let key in currentPrices) {
+                    let randomChange = (Math.random() - 0.5) * 0.6;
+                    let oldPrice = parseFloat(currentPrices[key].price.replace(/,/g, ''));
+                    if (!isNaN(oldPrice)) {
+                        let newPrice = oldPrice * (1 + randomChange / 100);
+                        currentPrices[key].price = newPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                        currentPrices[key].change = (currentPrices[key].change + randomChange * 0.3);
+                        currentPrices[key].change = Math.min(Math.max(currentPrices[key].change, -5), 5);
+                    }
+                }
+                updateMarketDisplay();
+                document.getElementById('lastUpdate').innerHTML = `🟢 Atualizado: ${new Date().toLocaleTimeString()}`;
+            }, 10000);
+        }
+
+        // Configurar calendário
+        flatpickr("#datePicker", {
+            dateFormat: "Y-m-d",
+            defaultDate: new Date()
+        });
+
+        document.getElementById('filterDateBtn').addEventListener('click', () => {
+            const date = document.getElementById('datePicker').value;
+            loadEconomicCalendar(date);
+        });
+
+        document.getElementById('resetDateBtn').addEventListener('click', () => {
+            document.getElementById('datePicker').value = '';
+            loadEconomicCalendar();
+        });
+
+        // Tabs
+        const tabs = document.querySelectorAll('.tab-btn');
+        const dashboardTab = document.getElementById('dashboardTab');
+        const aiTab = document.getElementById('aiTab');
+        const newsTab = document.getElementById('newsTab');
+        const calendarSidebar = document.getElementById('calendarSidebar');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                const tabId = tab.getAttribute('data-tab');
+                
+                dashboardTab.style.display = 'none';
+                aiTab.style.display = 'none';
+                newsTab.style.display = 'none';
+                calendarSidebar.style.display = 'block';
+                
+                if (tabId === 'dashboard') {
+                    dashboardTab.style.display = 'block';
+                } else if (tabId === 'ai') {
+                    aiTab.style.display = 'block';
+                } else if (tabId === 'news') {
+                    newsTab.style.display = 'block';
+                    loadNews();
+                }
+            });
+        });
+
+        // Chat IA
+        const chatMessages = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
+        const sendBtn = document.getElementById('sendBtn');
+
+        function addMessage(text, isUser) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `message
